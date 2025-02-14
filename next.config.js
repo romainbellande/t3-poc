@@ -3,8 +3,14 @@
  * for Docker builds.
  */
 import "./src/env.js";
+import { paraglide } from '@inlang/paraglide-next/plugin'
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = paraglide({
+    paraglide: {
+        project: "./project.inlang",
+        outdir: "./src/paraglide",
+    },
+});
 
 export default config;

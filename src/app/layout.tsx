@@ -1,5 +1,6 @@
+import { LanguageProvider } from '@inlang/paraglide-next';
 import "~/styles/globals.css";
-
+import NextTopLoader from 'nextjs-toploader';
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
@@ -14,11 +15,18 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = 'en';
+
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
-      </body>
-    </html>
+    <LanguageProvider>
+      <html lang={locale} className={`${GeistSans.variable}`}>
+        <body>
+          <NextTopLoader showSpinner={false} />
+          <TRPCReactProvider>
+            {children}
+          </TRPCReactProvider>
+        </body>
+      </html>
+    </LanguageProvider>
   );
 }

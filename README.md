@@ -44,11 +44,12 @@ Authentik is an open-source Identity Provider that can be used to authenticate u
 ## Todo
 
 - [x] Add Authentik as an auth provider
-- [ ] Implement Kysely for database access
+- [x] Implement Kysely for database access
 - [ ] Implement S3 compatible API
-- [ ] Implement paraglide for i18n
+- [x] Implement paraglide for i18n
 - [ ] Add Playwright tests
 - [ ] Implement features folder
 - [ ] Implement ACL
 - [ ] Implement Pulumi deployment
 - [ ] Implement Logs (JSON and pretty)
+- [ ] Implement Shadcn form components
