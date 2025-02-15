@@ -52,4 +52,5 @@ Authentik is an open-source Identity Provider that can be used to authenticate u
 - [ ] Implement ACL
 - [ ] Implement Pulumi deployment
 - [ ] Implement Logs (JSON and pretty)
+- [ ] Implement react-hook-form
 - [ ] Implement Shadcn form components

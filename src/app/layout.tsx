@@ -1,10 +1,11 @@
 import { LanguageProvider } from '@inlang/paraglide-next';
 import "~/styles/globals.css";
 import NextTopLoader from 'nextjs-toploader';
-import { GeistSans } from "geist/font/sans";
+import { Geist } from "next/font/google";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,7 +20,7 @@ export default function RootLayout({
 
   return (
     <LanguageProvider>
-      <html lang={locale} className={`${GeistSans.variable}`}>
+      <html lang={locale} className={`${geist.variable} font-sans`}>
         <body>
           <NextTopLoader showSpinner={false} />
           <TRPCReactProvider>
