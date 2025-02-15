@@ -1,0 +1,26 @@
+---
+description: Guidelines for creating conventional commit messages.
+globs: 
+---
+
+# commit_message_guidelines
+
+When I senbd you `/commit` command, you always execute a `get diff --staged` to get the diff and create for me a convetionnal commit message.
+
+The format for commit messages using the conventional commits spec:
+
+`"<type>[optional scope]: \n\n[optional body]\n\n[optional footer(s)]"`
+
+## rules
+
+* Always execute the command "git diff --staged" to obtain the diff context to commit.
+* Always suggest a conventional commit with a type and optional scope in lowercase letters.
+* Keep the commit message concise and within 60 characters.
+* Ensure the commit message is ready to be pasted into the terminal without further editing.
+* Provide the full command to commit, not just the message.
+
+## examples
+
+prompt: /commit
+response: git commit -m 'feat: add responsive navbar with TailwindCSS'
+
