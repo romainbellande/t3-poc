@@ -1,14 +1,8 @@
 import { KyselyAdapter } from "@auth/kysely-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
-import AuthentikProvider from 'next-auth/providers/authentik';
+import AuthentikProvider from "next-auth/providers/authentik";
 
 import { db } from "~/server/db";
-import {
-  accounts,
-  sessions,
-  users,
-  verificationTokens,
-} from "~/server/db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -49,6 +43,7 @@ export const authConfig = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
   adapter: KyselyAdapter(db as any), // TODO: wait for kysely-adapter to be updated, this pr failed to be released: https://github.com/nextauthjs/next-auth/pull/12386
   callbacks: {
     session: ({ session, user }) => ({

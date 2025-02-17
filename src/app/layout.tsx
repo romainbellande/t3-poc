@@ -1,6 +1,6 @@
-import { LanguageProvider } from '@inlang/paraglide-next';
+import { LanguageProvider } from "@inlang/paraglide-next";
 import "~/styles/globals.css";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
 import { Geist } from "next/font/google";
 import { type Metadata } from "next";
 
@@ -16,16 +16,14 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const locale = 'en';
+  const locale = "en";
 
   return (
     <LanguageProvider>
       <html lang={locale} className={`${geist.variable} font-sans`}>
         <body>
           <NextTopLoader showSpinner={false} />
-          <TRPCReactProvider>
-            {children}
-          </TRPCReactProvider>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
         </body>
       </html>
     </LanguageProvider>
