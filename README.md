@@ -40,6 +40,11 @@ Authentik is an open-source Identity Provider that can be used to authenticate u
 1. Run `pnpm authentik:setup` to create the initial user.
 2. Use the wizards button to create a new application with a provider. Setup using the explicit authentication flow.
 
+### Shadcn
+
+Shadcn is a library of pre-built headlesscomponents that can be used to build the UI.
+
+Run `npx shadcn@canary add your_component` to install the component.
 
 ## Todo
 
