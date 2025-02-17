@@ -2,25 +2,35 @@
 description: Guidelines for creating conventional commit messages.
 globs: 
 ---
-
 # Commit message guidelines
 
-When I senbd you `/commit` command, you always execute a `get diff --staged` to get the diff and create for me a convetionnal commit message.
+- When I send you `commit` command, you always execute a `get diff --staged | cat` to get the diff and generate a concise and clear commit message following the Conventional Commits specification.
+- The message should include a type, an optional scope, and a subject.
+- Use one of the following types: feat, fix, docs, style, refactor, test, chore, or perf.
+- If applicable, include a scope in parentheses to describe the part of the codebase affected.
+- The subject should be a brief, imperative description of the change.
+- Each line must not exceed 60 characters.
+- For multi-line commit messages, use multiple `-m` flags in the command, one for each line.
+- Never include raw newlines in commands - always use the `-m` flag approach.
 
-The format for commit messages using the conventional commits spec:
+Example Input:
 
-`"<type>[optional scope]: \n\n[optional body]\n\n[optional footer(s)]"`
+"commit"
 
-## rules
+Example Output for single-line commit:
+```
+feat: add user authentication system
+```
 
-* Always execute the command "git diff --staged" to obtain the diff context to commit.
-* Always suggest a conventional commit with a type and optional scope in lowercase letters.
-* Keep the commit message concise and within 60 characters.
-* Ensure the commit message is ready to be pasted into the terminal without further editing.
-* Provide the full command to commit, not just the message.
+Example Output for multi-line commit:
+```
+feat(auth): implement OAuth provider integration
 
-## examples
+- Add Google OAuth provider setup
+- Configure authentication callbacks
+- Implement user session management
+- Add protected route middleware
+```
 
-prompt: /commit
-response: git commit -m 'feat: add responsive navbar with TailwindCSS'
-
+Note: When executing the actual commit command, the multi-line message should be formatted using multiple -m flags like:
+git commit -m "feat(auth): implement OAuth provider integration" -m "- Add Google OAuth provider setup" -m "- Configure authentication callbacks" ...
