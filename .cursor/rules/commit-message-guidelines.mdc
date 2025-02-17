@@ -3,7 +3,7 @@ description: Guidelines for creating conventional commit messages.
 globs: 
 ---
 
-# commit_message_guidelines
+# Commit message guidelines
 
 When I senbd you `/commit` command, you always execute a `get diff --staged` to get the diff and create for me a convetionnal commit message.
 

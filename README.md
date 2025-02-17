@@ -47,6 +47,7 @@ Authentik is an open-source Identity Provider that can be used to authenticate u
 - [x] Implement Kysely for database access
 - [ ] Implement S3 compatible API
 - [x] Implement paraglide for i18n
+- [x] Implement cursor rules
 - [ ] Add Playwright tests
 - [ ] Implement features folder
 - [ ] Implement ACL
