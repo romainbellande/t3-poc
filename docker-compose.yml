@@ -1,4 +1,46 @@
 services:
+  traefik:
+    image: "traefik:v2.3"
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.useBindPortIP=true"
+      - "traefik.http.routers.traefik=true"
+      - "traefik.http.routers.traefik.entrypoints=http"
+    ports:
+      - "443:443"
+      - "80:80"
+      - "8080:8080"
+      - "8085:8085"
+    volumes:
+      - ${XDG_RUNTIME_DIR:-/var/run}/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/config.yml:/etc/traefik/config.yml:ro
+      
+  app:
+    image: node:22-bookworm-slim
+    hostname: ${PROJECT_NAME}.localhost
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -c 'npm install && npm run dev'
+
+    depends_on:
+      db:
+        condition: service_healthy
+      authentik:
+        condition: service_healthy
+      minio:
+         condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`${PROJECT_NAME}.localhost`)"
+      - "traefik.http.routers.app.entrypoints=http"
+      - "traefik.http.services.app.loadbalancer.server.port=80"
+
   db:
     image: postgres
     restart: on-failure
@@ -8,6 +50,12 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_DB: t3_poc
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}']
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     volumes:
       - db:/var/lib/postgresql/data
 
@@ -16,12 +64,23 @@ services:
     ports:
       - '9080:9000' # API port
       - '9081:9001' # Console port
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/minio/health/live']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     environment:
       MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID}
       MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY}
       MINIO_DEFAULT_BUCKETS: assets,${S3_INVENTORY_BUCKET_NAME}
     volumes:
       - minio:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio.rule=Host(`minio.${PROJECT_NAME}.localhost`)"
+      - "traefik.http.routers.minio.entrypoints=http"
+      - "traefik.http.services.minio.loadbalancer.server.port=9000"
 
   db-auth:
     image: docker.io/library/postgres:16-alpine
@@ -57,26 +116,39 @@ services:
   authentik:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.12.2}
     restart: unless-stopped
+    hostname: authentik.${PROJECT_NAME}.localhost
     command: server
+    healthcheck:
+      test: ["CMD", "ak", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     environment:
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: db-auth
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS:-CPkfSMd7qDNCwgoR0JLu1X}
+      AUTHENTIK_LISTEN__HTTP: 0.0.0.0:80
     volumes:
       - ./media:/media
       - ./custom-templates:/templates
     env_file:
       - .env
-    ports:
-      - '${COMPOSE_PORT_HTTP:-9000}:9000'
-      - '${COMPOSE_PORT_HTTPS:-9443}:9443'
+    # ports:
+    #   - '${COMPOSE_PORT_HTTP:-9000}:9000'
+    #   - '${COMPOSE_PORT_HTTPS:-9443}:9443'
     depends_on:
       db-auth:
         condition: service_healthy
       redis:
         condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authentik.rule=Host(`authentik.${PROJECT_NAME}.localhost`)"
+      - "traefik.http.routers.authentik.entrypoints=http"
+      - "traefik.http.services.authentik.loadbalancer.server.port=80"
 
   worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.12.2}
@@ -107,6 +179,26 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+
+  playwright-server:
+    image: mcr.microsoft.com/playwright:v1.50.1-noble
+    command: npx -y playwright@1.50.1 run-server --port 3300 --host 0.0.0.0
+    working_dir: /home/pwuser
+    user: pwuser
+    ipc: host
+    ports:
+      - "0.0.0.0:3300:3300"
+    depends_on:
+      - app
+
+  envsubst:
+    image: bhgedigital/envsubst
+    profiles:
+      - init
+    environment:
+      PROJECT_NAME: ${PROJECT_NAME}
+    volumes:
+      - ./:/wd
 
 volumes:
   db: {}

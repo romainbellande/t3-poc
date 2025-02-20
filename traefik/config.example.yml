@@ -1,0 +1,13 @@
+enable: true
+
+http:
+  routers:
+    traefik:
+      rule: "Host(`traefik.${PROJECT_NAME}.localhost`)"
+      service: "api@internal"
+      tls:
+        domains:
+          - main: "${PROJECT_NAME}.localhost"
+            sans:
+              - "*.${PROJECT_NAME}.localhost"
+

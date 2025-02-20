@@ -28,6 +28,9 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
+## Why dockerization and tls on localhost ?
+
+[“Dev/prod parity” is the 12-factor principles that concern us here](https://12factor.net/dev-prod-parity)
 
 ## Features
 
@@ -37,7 +40,7 @@ Authentik is an open-source Identity Provider that can be used to authenticate u
 
 #### Setup
 
-1. Run `pnpm authentik:setup` to create the initial user.
+1. Run `npm run authentik:setup` to create the initial user.
 2. Use the wizards button to create a new application with a provider. Setup using the explicit authentication flow.
 
 ### Shadcn
@@ -60,3 +63,4 @@ Run `npx shadcn@canary add your_component` to install the component.
 - [ ] Implement Logs (JSON and pretty)
 - [ ] Implement react-hook-form
 - [ ] Implement Shadcn form components
+- [ ] Implement env injection thanks to infisical cli

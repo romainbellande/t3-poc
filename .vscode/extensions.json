@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "inlang.vs-code-extension",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "skellock.just"
   ]
 }

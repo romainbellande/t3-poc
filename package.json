@@ -10,7 +10,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "dev": "next dev --turbo",
+    "dev": "next dev --turbo -H t3-poc.localhost -p 80",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "lint": "next lint",
@@ -19,9 +19,11 @@
     "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "authentik:setup": "open-cli http://localhost:9000/if/flow/initial-setup/",
+    "authentik:setup": "open-cli http://authentik.t3-poc.localhost/if/flow/initial-setup/",
     "postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
-    "prepare": "husky"
+    "prepare": "npx husky",
+    "e2e:run": "PW_TEST_CONNECT_WS_ENDPOINT=ws://localhost:3300/ playwright test",
+    "e2e:report": "playwright show-report"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts,css,less,scss,sass}": [
@@ -67,6 +69,7 @@
   },
   "devDependencies": {
     "@inlang/paraglide-js": "1.11.8",
+    "@playwright/test": "^1.50.1",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.10",
     "@types/pg": "^8.11.11",
