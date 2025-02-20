@@ -56,7 +56,7 @@ Run `npx shadcn@canary add your_component` to install the component.
 - [ ] Implement S3 compatible API
 - [x] Implement paraglide for i18n
 - [x] Implement cursor rules
-- [ ] Add Playwright tests
+- [ ] Add Cypress tests
 - [ ] Implement features folder
 - [ ] Implement ACL
 - [ ] Implement Pulumi deployment

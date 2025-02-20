@@ -46,14 +46,6 @@ yarn-error.log*
 .idea
 !.cursor/rules/*
 
-# Playwright
-node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-.auth
-
 # Traefik
 /traefik/certs/*.pem
 /traefik/config.yml

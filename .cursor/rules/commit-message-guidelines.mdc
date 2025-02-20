@@ -4,7 +4,7 @@ globs:
 ---
 # Commit message guidelines
 
-- When I send you `commit` command, you always execute a `get diff --staged | cat` to get the diff and generate a concise and clear commit message following the Conventional Commits specification.
+- When I send you `commit` command, you always execute a `get diff --staged -- . ':(exclude)package-lock.json' | cat` to get the diff and generate a concise and clear commit message following the Conventional Commits specification.
 - The message should include a type, an optional scope, and a subject.
 - Use one of the following types: feat, fix, docs, style, refactor, test, chore, or perf.
 - If applicable, include a scope in parentheses to describe the part of the codebase affected.
