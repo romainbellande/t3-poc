@@ -190,22 +190,6 @@ services:
     volumes:
       - ./:/wd
 
-  # e2e:
-  #   image: cypress/included:cypress-14.0.3-node-22.14.0-chrome-133.0.6943.53-1-ff-135.0-edge-133.0.3065.59-1
-  #   profiles:
-  #     - test
-  #   command: cypress run
-  #   working_dir: /app
-  #   environment:
-  #     - AUTH_USERNAME=admin@example.com
-  #     - AUTH_PASSWORD=mypassword
-  #     - CYPRESS_BASE_URL=http://t3-poc.localhost
-  #     - AUTH_DOMAIN=http://authentik.t3-poc.localhost
-  #   volumes:
-  #     - ./:/app
-
-
-
 volumes:
   db: {}
   minio: {}

@@ -28,6 +28,17 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 
 Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
 
+## How to deviler a new feature from entity creation to deployment ?
+
+1. Create the entity in the database: `./src/modules/post/post.schema.ts`
+2. Add the entity to the schema: `./src/server/db/schema.ts`
+3. Map the entity to the Kysely Database interface: `./src/server/db/index.ts`
+4. Create the service: `./src/modules/post/post.service.ts`
+5. Create the api route: `./src/modules/post/post.route.ts`
+6. Add the api route to the root router: `./src/server/api/root.ts`
+7. Create the frontend components: `./src/modules/post/components/my-component.tsx`
+8. Deploy the feature
+
 ## Why dockerization and tls on localhost ?
 
 [“Dev/prod parity” is the 12-factor principles that concern us here](https://12factor.net/dev-prod-parity)
@@ -53,14 +64,57 @@ Run `npx shadcn@canary add your_component` to install the component.
 
 - [x] Add Authentik as an auth provider
 - [x] Implement Kysely for database access
-- [ ] Implement S3 compatible API
 - [x] Implement paraglide for i18n
 - [x] Implement cursor rules
-- [ ] Add Cypress tests
-- [ ] Implement features folder
-- [ ] Implement ACL
-- [ ] Implement Pulumi deployment
-- [ ] Implement Logs (JSON and pretty)
+- [ ] Implement basic todo model
 - [ ] Implement react-hook-form
 - [ ] Implement Shadcn form components
+- [ ] Add Cypress tests
+- [ ] Implement S3 service
+- [ ] Implement Brevo service
+- [ ] Implement features folder
+- [ ] Implement ACL
+- [ ] Implement merge request CI tests
+- [ ] Implement Pulumi deployment
+- [ ] Implement Logs (JSON and pretty)
 - [ ] Implement env injection thanks to infisical cli
+
+## Usefull links
+
+### Core
+
+- [T3 Stack](https://create.t3.gg/)
+- [Next.js](https://nextjs.org/)
+- [tRPC](https://trpc.io/)
+- [React Query](https://tanstack.com/query/latest/docs/framework/react/overview)
+
+### Database
+
+- [Drizzle](https://orm.drizzle.team/)
+- [Kysely](https://kysely.dev/)
+
+### UI
+
+- [Shadcn](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+### Auth
+
+- [Authentik](https://docs.authentik.io/)
+- [NextAuth.js](https://next-auth.js.org/)
+
+### Infrastructure
+
+- [Docker](https://www.docker.com/)
+- [Pulumi](https://www.pulumi.com/)
+- [Infisical](https://infisical.com/)
+
+### Testing
+
+- [Cypress](https://www.cypress.io/)
+- [CCTDD: Cypress Component Test Driven Design](https://muratkerem.gitbook.io/cctdd)
+
+### Other
+
+- [React Hook Form](https://react-hook-form.com/)
+

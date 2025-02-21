@@ -5,6 +5,9 @@ set quiet := true
 [private]
 default :
     just help
+[private]
+dce +args:
+    docker compose exec app bash -c "{{ args }}"
 
 help:
     just --list
@@ -31,3 +34,9 @@ cert-init:
 [group('init')]
 traefik-init:
     docker compose --profile init run envsubst sh -c "envsubst < /wd/traefik/config.example.yml > /wd/traefik/config.yml"
+
+[group('db')]
+db-push:
+    just dce npm run db:push
+
+

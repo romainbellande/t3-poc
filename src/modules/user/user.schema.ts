@@ -8,20 +8,24 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
-import { createTable } from "./utils";
+import {
+  createTable,
+  id,
+  createdAt,
+  updatedAt,
+} from "~/server/db/schema/utils";
 
 export const users = createTable("user", {
-  id: varchar("id", { length: 255 })
-    .notNull()
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+  id,
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
-  emailVerified: timestamp("email_verified", {
+  email_verified: timestamp("email_verified", {
     mode: "date",
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
+  createdAt,
+  updatedAt,
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -38,7 +42,7 @@ export const accounts = createTable(
       .$type<AdapterAccount["type"]>()
       .notNull(),
     provider: varchar("provider", { length: 255 }).notNull(),
-    providerAccountId: varchar("provider_account_id", {
+    provider_account_id: varchar("provider_account_id", {
       length: 255,
     }).notNull(),
     refresh_token: text("refresh_token"),
@@ -51,7 +55,7 @@ export const accounts = createTable(
   },
   (account) => ({
     compoundKey: primaryKey({
-      columns: [account.provider, account.providerAccountId],
+      columns: [account.provider, account.provider_account_id],
     }),
     userIdIdx: index("account_user_id_idx").on(account.userId),
   }),
@@ -67,7 +71,7 @@ export const sessions = createTable(
     sessionToken: varchar("session_token", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("user_id", { length: 255 })
+    user_id: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id),
     expires: timestamp("expires", {
@@ -76,12 +80,12 @@ export const sessions = createTable(
     }).notNull(),
   },
   (session) => ({
-    userIdIdx: index("session_user_id_idx").on(session.userId),
+    userIdIdx: index("session_user_id_idx").on(session.user_id),
   }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, { fields: [sessions.userId], references: [users.id] }),
+  user: one(users, { fields: [sessions.user_id], references: [users.id] }),
 }));
 
 export const verificationTokens = createTable(

@@ -26,9 +26,9 @@ if (env.NODE_ENV !== "production") globalForDb.pool = pool;
 interface Database {
   account: Kyselify<typeof schema.accounts>;
   users: Kyselify<typeof schema.users>;
-  post: Kyselify<typeof schema.posts>;
   session: Kyselify<typeof schema.sessions>;
   verificationToken: Kyselify<typeof schema.verificationTokens>;
+  products: Kyselify<typeof schema.products>;
 }
 
 export const db = new Kysely<Database>({
