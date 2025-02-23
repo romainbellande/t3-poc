@@ -40,3 +40,5 @@ db-push:
     just dce npm run db:push
 
 
+shadcn-add +name:
+    just dce npx shadcn@canary add {{ name }}

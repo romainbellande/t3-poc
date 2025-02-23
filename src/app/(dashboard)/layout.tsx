@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import { AppSidebar } from '~/components/app-sidebar';
+import { SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar';
 import { auth } from '~/server/auth';
 
 export const metadata: Metadata = {
@@ -14,5 +16,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
     redirect('/api/auth/signin');
   }
 
-  return <>{children}</>;
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
+  );
 }

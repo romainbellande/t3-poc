@@ -3,7 +3,7 @@ import { integer, text, varchar } from 'drizzle-orm/pg-core';
 import { users } from '~/server/db/schema';
 import { createTable, id, createdAt, updatedAt } from '~/server/db/schema/utils';
 
-export const products = createTable('product', {
+export const products = createTable('products', {
   id,
   name: varchar('name', { length: 255 }).notNull(),
   description: text('description'),

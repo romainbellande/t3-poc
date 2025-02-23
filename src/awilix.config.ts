@@ -1,19 +1,23 @@
-import { createContainer, asClass, InjectionMode } from 'awilix';
-import type { ProductService } from './features/product';
+import { createContainer, asClass } from 'awilix';
+import { ProductService } from './features/product';
 
 export interface Cradle {
   productService: ProductService;
 }
 
 export const container = createContainer<Cradle>({
-  injectionMode: 'PROXY',
+  injectionMode: 'CLASSIC',
   strict: true,
 });
 
-container.loadModules(['features/**/*.service.ts'], {
-  resolverOptions: {
-    injectionMode: InjectionMode.PROXY,
-    lifetime: 'SINGLETON',
-    register: asClass,
-  },
+// container.loadModules(['features/**/*.service.ts'], {
+//   resolverOptions: {
+//     injectionMode: InjectionMode.PROXY,
+//     lifetime: 'SINGLETON',
+//     register: asClass,
+//   },
+// });
+
+container.register({
+  productService: asClass(ProductService),
 });

@@ -1,3 +1,6 @@
+'use client';
+
+import { api } from '~/trpc/react';
 import type { Product } from '../types';
 
 interface ProductListProps {
@@ -12,4 +15,10 @@ export function ProductList({ products }: ProductListProps) {
       ))}
     </div>
   );
+}
+
+export function ProductListContainer() {
+  const [products] = api.product.findMany.useSuspenseQuery();
+
+  return <ProductList products={products} />;
 }
