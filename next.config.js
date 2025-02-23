@@ -12,7 +12,7 @@ const config = paraglide({
     outdir: './src/paraglide',
   },
   // https://nextjs.org/docs/app/api-reference/config/next-config-js/serverExternalPackages
-  serverExternalPackages: ['kysely', 'awilix'],
+  serverExternalPackages: ['awilix'],
 });
 
 export default config;

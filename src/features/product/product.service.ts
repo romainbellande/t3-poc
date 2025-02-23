@@ -1,24 +1,26 @@
 import { db } from '~/server/db';
 import type { UpdateProduct, InsertProduct } from './types';
+import { products } from '~/server/db/schema';
+import { eq } from 'drizzle-orm';
 
 export class ProductService {
   create(input: InsertProduct) {
-    return db.insertInto('products').values(input).executeTakeFirst();
+    return db.insert(products).values(input).returning();
   }
 
   findMany() {
-    return db.selectFrom('products').selectAll().execute();
+    return db.select().from(products);
   }
 
   findById(id: string) {
-    return db.selectFrom('products').selectAll().where('id', '=', id).executeTakeFirst();
+    return db.select().from(products).where(eq(products.id, id));
   }
 
   update(id: string, input: UpdateProduct) {
-    return db.updateTable('products').set(input).where('id', '=', id).executeTakeFirst();
+    return db.update(products).set(input).where(eq(products.id, id)).returning();
   }
 
   delete(id: string) {
-    return db.deleteFrom('products').where('id', '=', id).executeTakeFirst();
+    return db.delete(products).where(eq(products.id, id)).returning();
   }
 }

@@ -6,18 +6,12 @@ export interface Cradle {
 }
 
 export const container = createContainer<Cradle>({
-  injectionMode: 'CLASSIC',
+  injectionMode: 'PROXY',
   strict: true,
 });
-
-// container.loadModules(['features/**/*.service.ts'], {
-//   resolverOptions: {
-//     injectionMode: InjectionMode.PROXY,
-//     lifetime: 'SINGLETON',
-//     register: asClass,
-//   },
-// });
 
 container.register({
   productService: asClass(ProductService),
 });
+
+export const core = container.cradle;

@@ -1,6 +1,7 @@
 ---
 description: Guidelines for creating conventional commit messages.
 globs: 
+alwaysApply: false
 ---
 # Commit message guidelines
 
@@ -12,6 +13,7 @@ globs:
 - Each line must not exceed 60 characters.
 - For multi-line commit messages, use multiple `-m` flags in the command, one for each line.
 - Never include raw newlines in commands - always use the `-m` flag approach.
+- After commiting, if there is a lint rule issue and your perform changes to fix the issue, always execute a `git add .` command after applying your changes
 
 Example Input:
 

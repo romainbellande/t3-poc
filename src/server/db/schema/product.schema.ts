@@ -8,7 +8,7 @@ export const products = createTable('products', {
   name: varchar('name', { length: 255 }).notNull(),
   description: text('description'),
   price: integer('price').notNull(),
-  authorId: varchar('authorId', { length: 255 })
+  authorId: varchar('author_id', { length: 255 })
     .notNull()
     .references(() => users.id),
   createdAt,

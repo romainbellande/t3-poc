@@ -63,7 +63,7 @@ Run `npx shadcn@canary add your_component` to install the component.
 ## Todo
 
 - [x] Add Authentik as an auth provider
-- [x] Implement Kysely for database access
+- [x] Implement Drizzle for database access
 - [x] Implement paraglide for i18n
 - [x] Implement cursor rules
 - [ ] Implement basic todo model
@@ -78,6 +78,8 @@ Run `npx shadcn@canary add your_component` to install the component.
 - [ ] Implement Pulumi deployment
 - [ ] Implement Logs (JSON and pretty)
 - [ ] Implement env injection thanks to infisical cli
+
+I wanted to implement Kysely as query builder, combined with Drizzle but there is [this issue](https://github.com/drizzle-team/drizzle-orm/issues/4029), which is a complete blocker.
 
 ## Usefull links
 

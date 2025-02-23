@@ -5,47 +5,29 @@
 import { z } from 'zod';
 
 import { createTRPCRouter, protectedProcedure } from '~/server/api/trpc';
-import { container } from '~/awilix.config';
-
+import { core } from '~/awilix.config';
+import { createProductSchema, updateProductSchema } from './product.zod';
 export const productRouter = createTRPCRouter({
-  create: protectedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        description: z.string(),
-        price: z.number(),
-        authorId: z.string(),
-      }),
-    )
-    .mutation(async ({ input, ctx }) => {
-      return container.cradle.productService.create({
-        ...input,
-        authorId: ctx.session.user.id,
-      });
-    }),
+  create: protectedProcedure.input(createProductSchema).mutation(async ({ input, ctx }) => {
+    return core.productService.create({
+      ...input,
+      authorId: ctx.session.user.id,
+    });
+  }),
 
   findMany: protectedProcedure.query(async () => {
-    return container.cradle.productService.findMany();
+    return core.productService.findMany();
   }),
 
   findById: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    return container.cradle.productService.findById(input);
+    return core.productService.findById(input);
   }),
 
-  update: protectedProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        name: z.string().optional(),
-        description: z.string().optional(),
-        price: z.number().optional(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      return container.cradle.productService.update(input.id, input);
-    }),
+  update: protectedProcedure.input(updateProductSchema).mutation(async ({ input }) => {
+    return core.productService.update(input.id, input);
+  }),
 
   delete: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
-    return container.cradle.productService.delete(input);
+    return core.productService.delete(input);
   }),
 });

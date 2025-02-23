@@ -1,9 +1,9 @@
 import { ProductListContainer } from '~/features/product/components/product-list';
+import { ProductFormContainer } from '~/features/product/components/product-form';
 import { auth } from '~/server/auth';
 import { api, HydrateClient } from '~/trpc/server';
 
 export default async function Home() {
-  // const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth();
 
   if (session?.user) {
@@ -12,9 +12,9 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <div>
-        <h1>Hello</h1>
+      <div className="flex flex-col gap-4">
         <ProductListContainer />
+        <ProductFormContainer />
       </div>
     </HydrateClient>
   );

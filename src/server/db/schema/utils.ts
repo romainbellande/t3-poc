@@ -14,14 +14,14 @@ export const id = varchar('id', { length: 255 })
   .primaryKey()
   .$defaultFn(() => crypto.randomUUID());
 
-export const createdAt = timestamp('createdAt', {
+export const createdAt = timestamp('created_at', {
   withTimezone: true,
   mode: 'date',
 })
   .defaultNow()
   .notNull();
 
-export const updatedAt = timestamp('updatedAt', {
+export const updatedAt = timestamp('updated_at', {
   withTimezone: true,
   mode: 'date',
 })
