@@ -6,13 +6,10 @@
  * Also we don't use auth middleware here because it requires the [JWT Session Strategy](https://next-auth.js.org/configuration/nextjs#caveats).
  * Using database sessions is the recommended approach and you should read up on JWTs before switching to the JWT session strategy to avoid any security issues.
  */
-import { middleware as intlMiddleware } from "./lib/i18n";
+import { middleware as intlMiddleware } from './lib/i18n';
 
 export const config = {
-  matcher: [
-    "/(en|fr)/:path*",
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-  ],
+  matcher: ['/(en|fr)/:path*', '/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
 
 export default intlMiddleware;

@@ -1,2 +1,2 @@
-export * from "~/modules/user/user.schema";
-export * from "~/modules/product/product.schema";
+export * from './schema/user.schema';
+export * from './schema/product.schema';

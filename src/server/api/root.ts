@@ -1,5 +1,5 @@
-import { productRouter } from "~/modules/product/product.router";
-import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { productRouter } from '~/features/product';
+import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 
 /**
  * This is the primary router for your server.

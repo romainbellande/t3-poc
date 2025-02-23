@@ -1,14 +1,9 @@
-import { type Kyselify } from "drizzle-orm/kysely";
-import { Pool } from "pg";
-import {
-  CamelCasePlugin,
-  Kysely,
-  PostgresDialect,
-  type PostgresPool,
-} from "kysely";
+import { type Kyselify } from 'drizzle-orm/kysely';
+import { Pool } from 'pg';
+import { CamelCasePlugin, Kysely, PostgresDialect, type PostgresPool } from 'kysely';
 
-import { env } from "~/env";
-import type * as schema from "./schema";
+import { env } from '~/env';
+import type * as schema from './schema';
 
 /**
  * Cache the database connection pool in development. This avoids creating a new connection on every HMR
@@ -18,12 +13,11 @@ const globalForDb = globalThis as unknown as {
   pool: PostgresPool | undefined;
 };
 
-const pool =
-  globalForDb.pool ?? new Pool({ connectionString: env.DATABASE_URL });
+const pool = globalForDb.pool ?? new Pool({ connectionString: env.DATABASE_URL });
 
-if (env.NODE_ENV !== "production") globalForDb.pool = pool;
+if (env.NODE_ENV !== 'production') globalForDb.pool = pool;
 
-interface Database {
+export interface Database {
   account: Kyselify<typeof schema.accounts>;
   users: Kyselify<typeof schema.users>;
   session: Kyselify<typeof schema.sessions>;

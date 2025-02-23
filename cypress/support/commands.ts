@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
-import { type AuthentikLoginArgs, authentikLogin } from "./auth/authentik";
+import { type AuthentikLoginArgs, authentikLogin } from './auth/authentik';
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -47,4 +47,4 @@ declare global {
   }
 }
 
-Cypress.Commands.add("authentikLogin", authentikLogin);
+Cypress.Commands.add('authentikLogin', authentikLogin);

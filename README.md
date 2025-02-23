@@ -83,6 +83,8 @@ Run `npx shadcn@canary add your_component` to install the component.
 
 ### Core
 
+- [folder architecture](https://www.youtube.com/watch?v=xyxrB2Aa7KE)
+- [permissions](https://www.youtube.com/watch?v=5GG-VUvruzE)
 - [T3 Stack](https://create.t3.gg/)
 - [Next.js](https://nextjs.org/)
 - [tRPC](https://trpc.io/)
